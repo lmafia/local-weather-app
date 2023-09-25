@@ -1,0 +1,35 @@
+env:
+  # 7 GiB by default on GitHub, setting to 6 GiB
+  # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+  NODE_OPTIONS: --max-old-space-size=6144
+on:
+  push:
+    branches: [main]
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # 设置服务器时区为东八区
+      - name: Set time zone
+        run: sudo timedatectl set-timezone 'Asia/Shanghai'
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build # 根据您的项目配置运行构建命令
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./dist
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          commit_message: Update ghPages
+          force_orphan: true
