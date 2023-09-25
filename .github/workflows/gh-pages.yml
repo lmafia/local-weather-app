@@ -1,13 +1,15 @@
-env:
-  # 7 GiB by default on GitHub, setting to 6 GiB
-  # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
-  NODE_OPTIONS: --max-old-space-size=6144
+name: GitHub Pages
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+  pull_request:
 jobs:
   repo-sync:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
 
@@ -19,7 +21,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          
+          gi
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
