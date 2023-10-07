@@ -120,12 +120,12 @@ const weatherData = ref({
 });
 const route = useRoute();
 // 高德天气 api key
-const amapaApiKey = ref(null);
+const amapaApiKey = ref(localStorage.getItem("apiKey"));
 
 const queryLiveWeather = async () => {
   try {
     const result = await axios.get(
-      `https://restapi.amap.com/v3/weather/weatherInfo?extensions=base&key=${amapaApiKey}&city=${route.query.code}`
+      `https://restapi.amap.com/v3/weather/weatherInfo?extensions=base&key=${amapaApiKey.value}&city=${route.query.code}`
     );
     if (result.data.status == 1) {
       weatherData.value.live = result.data.lives[0];
@@ -140,7 +140,7 @@ const queryLiveWeather = async () => {
 const queryForeCastWeather = async () => {
   try {
     const result = await axios.get(
-      `https://restapi.amap.com/v3/weather/weatherInfo?extensions=all&key=${amapaApiKey}&city=${route.query.code}`
+      `https://restapi.amap.com/v3/weather/weatherInfo?extensions=all&key=${amapaApiKey.value}&city=${route.query.code}`
     );
     if (result.data.status == 1) {
       weatherData.value.forecasts = result.data.forecasts[0].casts;

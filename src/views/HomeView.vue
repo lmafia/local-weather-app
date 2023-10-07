@@ -51,15 +51,17 @@ const searchQuery = ref("");
 const queryTimeout = ref(null);
 const amapQueryResults = ref(null);
 const queryError = ref(null);
-const amapaApiKey = ref(null);
+
+const amapaApiKey = ref(localStorage.getItem("apiKey"));
 
 const getSearchResults = () => {
   clearTimeout(queryTimeout.value);
   queryTimeout.value = setTimeout(async () => {
     if (searchQuery.value !== "") {
       try {
+        console.log(amapaApiKey.value);
         const result = await axios.get(
-          `https://restapi.amap.com/v3/geocode/geo?key=${amapaApiKey}&address=${searchQuery.value}`
+          `https://restapi.amap.com/v3/geocode/geo?key=${amapaApiKey.value}&address=${searchQuery.value}`
         );
         if (result.data.status == 0) {
           amapQueryResults.value = [];

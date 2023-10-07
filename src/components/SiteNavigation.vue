@@ -63,19 +63,15 @@
         :modal-active="keyModalActive"
         @close-modal="toggleKeyModal"
       >
-        <div class="flex flex-col">
-          <p class="text-sm">API Key</p>
+        <div class="flex flex-col px-2">
+          <p class="text-xl text-black">API Key</p>
           <input
             v-model="apiKey"
             @input="addApiKey"
-            type="textarea"
+            type="text"
             placeholder="Please fill in your api key..."
-            class="break-all bg-transparent border-b focus:border-weather-secondary focus:outline-none focus:shadow-sm"
+            class="py-2 px-5 w-full border-b focus:border-weather-secondary focus:outline-none focus:shadow-sm"
           />
-          <div
-            class="m-4 max-w-full overflow-y-hidden break-words border border-solid border-black text-4xl"
-            contenteditable="true"
-          ></div>
         </div>
       </BaseModal>
     </nav>
@@ -128,8 +124,10 @@ const addCity = () => {
 };
 
 // add Key
-const apiKey = ref(null);
+const apiKey = ref(localStorage.getItem("apiKey"));
+
 const addApiKey = () => {
   localStorage.setItem("apiKey", apiKey.value);
 };
+
 </script>

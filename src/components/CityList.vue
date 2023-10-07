@@ -20,7 +20,8 @@ import CityCard from "./CityCard.vue";
 import { useRouter } from "vue-router";
 
 const savedCities = ref([]);
-const amapaApiKey = ref(null);
+const amapaApiKey = ref(localStorage.getItem("apiKey"));
+
 const getCities = async () => {
   if (localStorage.getItem("saveCities")) {
     savedCities.value = JSON.parse(localStorage.getItem("saveCities"));
@@ -38,7 +39,7 @@ const getCities = async () => {
       console.log(city.code);
       requests.push(
         axios.get(
-          `https://restapi.amap.com/v3/weather/weatherInfo?extensions=base&key=${amapaApiKey}&city=${city.code}`
+          `https://restapi.amap.com/v3/weather/weatherInfo?extensions=base&key=${amapaApiKey.value}&city=${city.code}`
         )
       );
     });
