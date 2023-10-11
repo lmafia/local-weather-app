@@ -61,13 +61,12 @@
 
       <BaseModal
         :modal-active="keyModalActive"
-        @close-modal="toggleKeyModal"
+        @close-modal="toggleKeyModalAndAddKey"
       >
         <div class="flex flex-col px-2">
           <p class="text-xl text-black">API Key</p>
           <input
             v-model="apiKey"
-            @input="addApiKey"
             type="text"
             placeholder="Please fill in your api key..."
             class="py-2 px-5 w-full border-b focus:border-weather-secondary focus:outline-none focus:shadow-sm"
@@ -81,10 +80,11 @@
 <script setup>
 import { RouterLink, useRoute } from "vue-router";
 import BaseModal from "./BaseModal.vue";
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import router from "../router";
 
 const route = useRoute();
+const reload = inject("reload");
 
 const modalActive = ref(false);
 const toggleModal = () => {
@@ -94,6 +94,12 @@ const toggleModal = () => {
 const keyModalActive = ref(false);
 const toggleKeyModal = () => {
   keyModalActive.value = !keyModalActive.value;
+};
+
+const toggleKeyModalAndAddKey = () => {
+  keyModalActive.value = !keyModalActive.value;
+  addApiKey();
+  reload();
 };
 
 const saveCities = ref([]);
@@ -129,5 +135,4 @@ const apiKey = ref(localStorage.getItem("apiKey"));
 const addApiKey = () => {
   localStorage.setItem("apiKey", apiKey.value);
 };
-
 </script>
