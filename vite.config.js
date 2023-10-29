@@ -3,8 +3,14 @@ import { fileURLToPath, URL } from "url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
+console.log(process.env.IS_GH_PAGES);
+
+
+
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(
+  {
+  
   plugins: [vue()],
   resolve: {
     alias: {
@@ -12,5 +18,6 @@ export default defineConfig({
     },
   },
   // base: '/local-weather-app/'
-  base: process.env.NODE_ENV === 'gh-pages' ? '/local-weather-app/' : '/',
+  
+  base: process.env.IS_GH_PAGES ? '/local-weather-app/' : '/',
 });
