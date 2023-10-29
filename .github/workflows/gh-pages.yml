@@ -16,7 +16,7 @@ jobs:
       # 设置服务器时区为东八区
       - name: Set time zone
         run: sudo timedatectl set-timezone 'Asia/Shanghai'
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -29,12 +29,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-
       - name: Install dependencies
         run: npm install
 
       - name: Build
-        run: npm run build # 根据您的项目配置运行构建命令
+        # 根据您的项目配置运行构建命令
+        run: |
+          export NODE_ENV=gh-pages
+          npm run build
 
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3

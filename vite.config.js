@@ -11,5 +11,6 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-  base: '/local-weather-app/'
+  // base: '/local-weather-app/'
+  base: process.env.NODE_ENV === 'gh-pages' ? '/local-weather-app/' : '/',
 });
